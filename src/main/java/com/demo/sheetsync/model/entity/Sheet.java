@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,9 +17,9 @@ import java.util.List;
 @Table(name = "sheet")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Sheet {
 
     @Id
@@ -32,8 +35,8 @@ public class Sheet {
     @Column(nullable = false)
     private List<String> headers;
 
-    // Serialize List<LinkedHashMap<String, Object>> as a JSONB PostgreSQL data type
-    @Convert(converter = JSONBConverter.class)
+    // Serialize List<LinkedHashMap<String, Object>> as a JSONB PostgreSQL data type using hibernate-types dependency
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb", nullable = false)
     private List<LinkedHashMap<String, Object>> data;
 
