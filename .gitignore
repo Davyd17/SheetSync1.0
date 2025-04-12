@@ -32,7 +32,7 @@ nbproject/private/
 !.idea/runConfigurations
 
 # Ignore environment and configuration files
-.env
+dev.env
 *.env
 application.properties
 application-*.properties
