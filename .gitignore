@@ -71,3 +71,6 @@ docker-compose.override.yml
 # Ignore binary or any user configuration files
 bin/
 */bin/
+
+# Ignore Google auth credentials
+src/main/resources/credentials.json
