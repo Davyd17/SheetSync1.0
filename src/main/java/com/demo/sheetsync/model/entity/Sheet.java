@@ -1,6 +1,5 @@
 package com.demo.sheetsync.model.entity;
 
-import com.demo.sheetsync.util.JSONBConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

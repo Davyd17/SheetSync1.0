@@ -22,8 +22,8 @@ public class SpreadSheet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String spreadsheet_id;
+    @Column(nullable = false, name = "spreadsheet_id")
+    private String spreadsheetId;
 
     @Column(nullable = false)
     private String title;
