@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpreadSheetRepository extends JpaRepository<SpreadSheet, Integer> {
 
+    SpreadSheet findBySpreadsheetId(String spreadsheetId);
+
 }
