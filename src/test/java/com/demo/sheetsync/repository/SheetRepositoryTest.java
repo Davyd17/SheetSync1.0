@@ -35,7 +35,7 @@ class SheetRepositoryTest {
 
         //We save a spreadsheet before interact with the Sheet to apply the relation between them
         spreadSheetRepository.save(SpreadSheet.builder()
-                .spreadsheet_id("spreadSheetMockId")
+                .spreadsheetId("spreadSheetMockId")
                 .title("testTitle")
                 .build());
     }
@@ -50,7 +50,7 @@ class SheetRepositoryTest {
         //Each row
         LinkedHashMap<String, Object> row = new LinkedHashMap<>();
 
-        //The whole data that will be saved
+        //The whole rows that will be saved
         List<LinkedHashMap<String, Object>> data = new ArrayList<>();
 
         row.put(headers.get(0), "Alex");
@@ -68,11 +68,11 @@ class SheetRepositoryTest {
 
         //Save the Sheet with the related SpreadSheet saved previously
         Sheet sheet = Sheet.builder()
-                .sheetId("mockSheetId")
+                .sheetId(1234)
                 .headers(headers)
                 .spreadSheet(spreadSheet)
                 .title("testTittle")
-                .data(data)
+                .rows(data)
                 .build();
 
         //When
@@ -84,6 +84,6 @@ class SheetRepositoryTest {
                         "Sheet not found"
                 ));
 
-        assertThat(savedSheet.getData()).isEqualTo(data);
+        assertThat(savedSheet.getRows()).isEqualTo(data);
     }
 }
