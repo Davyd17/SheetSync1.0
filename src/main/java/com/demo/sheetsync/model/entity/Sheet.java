@@ -1,6 +1,5 @@
 package com.demo.sheetsync.model.entity;
 
-import com.demo.sheetsync.util.JSONBConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +26,7 @@ public class Sheet {
     private Integer id;
 
     @Column(nullable = false, name = "sheet_id")
-    private String sheetId;
+    private Integer sheetId;
 
     @Column(nullable = false)
     private String title;
@@ -35,10 +34,10 @@ public class Sheet {
     @Column(nullable = false)
     private List<String> headers;
 
-    // Serialize List<LinkedHashMap<String, Object>> as a JSONB PostgreSQL data type using hibernate-types dependency
+    // Serialize List<LinkedHashMap<String, Object>> as a JSONB PostgreSQL rows type using hibernate-types dependency
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb", nullable = false)
-    private List<LinkedHashMap<String, Object>> data;
+    private List<LinkedHashMap<String, Object>> rows;
 
     @ManyToOne
     @JoinColumn(name = "spreadsheet_id", nullable = false)
