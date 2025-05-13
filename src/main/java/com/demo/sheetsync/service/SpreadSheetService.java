@@ -3,6 +3,7 @@ package com.demo.sheetsync.service;
 import com.demo.sheetsync.model.entity.SpreadSheet;
 import com.demo.sheetsync.model.entity.dto.mapper.GoogleSpreadsheetMapper;
 import com.demo.sheetsync.model.entity.dto.mapper.SpreadSheetDataMapper;
+import com.demo.sheetsync.model.entity.dto.request.SpreadSheetDataRequest;
 import com.demo.sheetsync.model.entity.dto.request.SpreadSheetInfoRequest;
 import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
@@ -22,7 +23,7 @@ public class SpreadSheetService {
     private final SpreadSheetDataMapper spreadSheetDataMapper;
     private final Sheets sheets;
 
-    public SpreadSheetDataResponse saveSpreadSheet(SpreadSheetInfoRequest request) throws IOException {
+    public SpreadSheetDataResponse saveSpreadSheet(SpreadSheetDataRequest request) throws IOException {
 
         Spreadsheet googleSpreadSheet = sheets.spreadsheets()
                 .get(request.getSpreadSheetId())
