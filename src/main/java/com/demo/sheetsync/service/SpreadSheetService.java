@@ -4,7 +4,6 @@ import com.demo.sheetsync.model.entity.SpreadSheet;
 import com.demo.sheetsync.model.entity.dto.mapper.GoogleSpreadsheetMapper;
 import com.demo.sheetsync.model.entity.dto.mapper.SpreadSheetDataMapper;
 import com.demo.sheetsync.model.entity.dto.request.SpreadSheetDataRequest;
-import com.demo.sheetsync.model.entity.dto.request.SpreadSheetInfoRequest;
 import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
 import com.google.api.services.sheets.v4.Sheets;
