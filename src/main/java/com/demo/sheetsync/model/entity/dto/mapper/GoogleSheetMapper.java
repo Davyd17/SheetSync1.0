@@ -9,9 +9,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class GoogleSheetMapper {
 
-    private final GoogleSpreadsheetMapper googleSpreadsheetMapper;
-
-    public Sheet mapToEntity(com.google.api.services.sheets.v4.model.Sheet googleSheet,
+    public static Sheet mapToEntity(com.google.api.services.sheets.v4.model.Sheet googleSheet,
                              Spreadsheet parentGoogleSpreadSheet){
 
         return Sheet.builder()
@@ -19,7 +17,7 @@ public class GoogleSheetMapper {
                 .title(googleSheet.getProperties().getTitle())
                 .headers(new ArrayList<>())
                 .rows(new ArrayList<>())
-                .spreadSheet(googleSpreadsheetMapper.maptoEntity(parentGoogleSpreadSheet))
+                .spreadSheet(GoogleSpreadsheetMapper.maptoEntity(parentGoogleSpreadSheet))
                 .build();
     }
 
