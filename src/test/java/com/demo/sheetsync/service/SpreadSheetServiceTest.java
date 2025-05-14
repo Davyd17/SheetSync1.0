@@ -50,9 +50,6 @@ class SpreadSheetServiceTest {
         //Arrange
         String spreadSheetId = "test_spreadSheet_id";
 
-        SpreadSheetDataRequest request =
-                new SpreadSheetDataRequest(spreadSheetId);
-
         Spreadsheet googleSpreadsheet = new Spreadsheet();
 
         SpreadSheet spreadSheetEntity = new SpreadSheet();
@@ -76,7 +73,7 @@ class SpreadSheetServiceTest {
                 .toResponse(savedEntity)).thenReturn(response);
 
         //Act
-        SpreadSheetDataResponse result = service.saveSpreadSheet(request);
+        SpreadSheetDataResponse result = service.saveSpreadSheet(spreadSheetId);
 
         //Assert
         assertEquals(response, result);

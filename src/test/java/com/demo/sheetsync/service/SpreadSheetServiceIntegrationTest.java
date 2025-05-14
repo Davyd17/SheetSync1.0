@@ -49,8 +49,6 @@ public class SpreadSheetServiceIntegrationTest {
 
         //Given
         String spreadSheetId = "test_spreadSheet_id";
-        SpreadSheetDataRequest request = new SpreadSheetDataRequest();
-        request.setSpreadSheetId(spreadSheetId);
 
         Spreadsheet googleSpreadsheet = new Spreadsheet();
         googleSpreadsheet.setSpreadsheetId("test_spreadSheet_id");
@@ -76,7 +74,7 @@ public class SpreadSheetServiceIntegrationTest {
         when(googleMapper.maptoEntity(googleSpreadsheet)).thenReturn(entity);
 
         //When
-        SpreadSheetDataResponse result = service.saveSpreadSheet(request);
+        SpreadSheetDataResponse result = service.saveSpreadSheet(spreadSheetId);
 
         //Then
         assertNotNull(result);
