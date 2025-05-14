@@ -4,9 +4,10 @@ import com.demo.sheetsync.model.entity.SpreadSheet;
 import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
 import org.springframework.stereotype.Component;
 
+@Component
 public class SpreadSheetDataMapper {
 
-    public static SpreadSheetDataResponse toResponse(SpreadSheet spreadSheet){
+    public SpreadSheetDataResponse toResponse(SpreadSheet spreadSheet){
 
         return new SpreadSheetDataResponse(
                 spreadSheet.getSpreadsheetId(),

@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 public class GoogleSpreadsheetMapper {
 
-    public static SpreadSheet maptoEntity(Spreadsheet googleSpreadsheet){
+    public SpreadSheet maptoEntity(Spreadsheet googleSpreadsheet){
 
         return SpreadSheet.builder()
                 .spreadsheetId(googleSpreadsheet.getSpreadsheetId())
