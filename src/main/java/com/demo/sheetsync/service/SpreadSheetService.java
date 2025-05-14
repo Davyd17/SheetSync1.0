@@ -24,31 +24,35 @@ public class SpreadSheetService {
     private final SpreadSheetRepository repository;
     private final Sheets sheets;
 
+    private final GoogleSpreadsheetMapper googleSpreadsheetMapper;
+
+    private final SpreadSheetDataMapper spreadSheetDataMapper;
+
     private static final Logger logger = LoggerFactory.getLogger(SpreadSheetService.class);
 
-    public SpreadSheetDataResponse saveSpreadSheet(SpreadSheetDataRequest request)  {
+    public SpreadSheetDataResponse saveSpreadSheet(String spreadSheetId)  {
 
-        Spreadsheet googleSpreadSheet = tryGetGoogleSpreadSheet(request);
+        Spreadsheet googleSpreadSheet = tryGetGoogleSpreadSheet(spreadSheetId);
 
-        SpreadSheet spreadSheet = GoogleSpreadsheetMapper.maptoEntity(googleSpreadSheet);
+        SpreadSheet spreadSheet = googleSpreadsheetMapper.maptoEntity(googleSpreadSheet);
 
-        return SpreadSheetDataMapper
+        return spreadSheetDataMapper
                 .toResponse(repository.save(spreadSheet));
 
     }
 
-    private Spreadsheet tryGetGoogleSpreadSheet(SpreadSheetDataRequest request){
+    private Spreadsheet tryGetGoogleSpreadSheet(String spreadSheetId){
 
         try {
 
             return sheets.spreadsheets()
-                    .get(request.getSpreadSheetId())
+                    .get(spreadSheetId)
                     .execute();
 
         } catch (IOException e){
 
             String msg = "Something went wrong retrieving spreadsheet with ID: "
-                    + request.getSpreadSheetId();
+                    + spreadSheetId;
 
             logger.error(msg, e);
             throw new GoogleSheetAccessException(msg, e);
