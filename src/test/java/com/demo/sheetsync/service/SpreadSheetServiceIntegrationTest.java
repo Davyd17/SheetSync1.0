@@ -34,15 +34,12 @@ public class SpreadSheetServiceIntegrationTest {
 
     @Autowired
     SpreadSheetRepository repository;
-
     @Autowired
     SpreadSheetService service;
-
     @MockitoBean
     GoogleSpreadsheetMapper googleMapper;
-
     @MockitoBean
-    Sheets sheets;
+    GoogleSheetsService googleSheetsService;
 
     @Test
     void should_save_and_return_spreadsheet_response() throws IOException {
@@ -62,13 +59,9 @@ public class SpreadSheetServiceIntegrationTest {
                 .sheets(new ArrayList<>())
                 .build();
 
-        //Mock Sheets
-        Sheets.Spreadsheets spreadsheets = mock(Sheets.Spreadsheets.class);
-        Sheets.Spreadsheets.Get get = mock(Sheets.Spreadsheets.Get.class);
-
-        when(sheets.spreadsheets()).thenReturn(spreadsheets);
-        when(spreadsheets.get(spreadSheetId)).thenReturn(get);
-        when(get.execute()).thenReturn(googleSpreadsheet);
+        when(googleSheetsService
+                .getGoogleSpreadSheet(spreadSheetId))
+                .thenReturn(googleSpreadsheet);
 
         //Mock mapper behavior
         when(googleMapper.maptoEntity(googleSpreadsheet)).thenReturn(entity);

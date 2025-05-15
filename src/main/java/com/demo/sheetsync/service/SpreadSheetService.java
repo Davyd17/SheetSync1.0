@@ -22,17 +22,15 @@ import java.io.IOException;
 public class SpreadSheetService {
 
     private final SpreadSheetRepository repository;
-    private final Sheets sheets;
-
     private final GoogleSpreadsheetMapper googleSpreadsheetMapper;
-
     private final SpreadSheetDataMapper spreadSheetDataMapper;
+    private final GoogleSheetsService googleSheetsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SpreadSheetService.class);
 
     public SpreadSheetDataResponse saveSpreadSheet(String spreadSheetId)  {
 
-        Spreadsheet googleSpreadSheet = tryGetGoogleSpreadSheet(spreadSheetId);
+        Spreadsheet googleSpreadSheet = googleSheetsService
+                .getGoogleSpreadSheet(spreadSheetId);
 
         SpreadSheet spreadSheet = googleSpreadsheetMapper.maptoEntity(googleSpreadSheet);
 
@@ -41,24 +39,6 @@ public class SpreadSheetService {
 
     }
 
-    private Spreadsheet tryGetGoogleSpreadSheet(String spreadSheetId){
-
-        try {
-
-            return sheets.spreadsheets()
-                    .get(spreadSheetId)
-                    .execute();
-
-        } catch (IOException e){
-
-            String msg = "Something went wrong retrieving spreadsheet with ID: "
-                    + spreadSheetId;
-
-            logger.error(msg, e);
-            throw new GoogleSheetAccessException(msg, e);
-        }
-
-    }
 
 
 }

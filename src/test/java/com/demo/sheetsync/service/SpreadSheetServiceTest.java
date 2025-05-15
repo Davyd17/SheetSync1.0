@@ -33,13 +33,10 @@ class SpreadSheetServiceTest {
     SpreadSheetDataMapper spreadSheetDataMapper;
 
     @Mock
-    Sheets sheets;
+    GoogleSheetsService googleSheetsService;
 
     @Mock
-    Sheets.Spreadsheets spreadsheets;
-
-    @Mock
-    Sheets.Spreadsheets.Get getRequest;
+    Spreadsheet spreadsheet;
 
     @InjectMocks
     SpreadSheetService service;
@@ -59,9 +56,8 @@ class SpreadSheetServiceTest {
         SpreadSheetDataResponse response =
                 new SpreadSheetDataResponse();
 
-        when(sheets.spreadsheets()).thenReturn(spreadsheets);
-        when(spreadsheets.get(spreadSheetId)).thenReturn(getRequest);
-        when(getRequest.execute()).thenReturn(googleSpreadsheet);
+        when(googleSheetsService.getGoogleSpreadSheet(spreadSheetId))
+                .thenReturn(googleSpreadsheet);
 
         when(googleSpreadsheetMapper
                 .maptoEntity(googleSpreadsheet))
@@ -78,8 +74,7 @@ class SpreadSheetServiceTest {
         //Assert
         assertEquals(response, result);
 
-        verify(sheets.spreadsheets()).get(spreadSheetId);
-        verify(getRequest).execute();
+        verify(googleSheetsService).getGoogleSpreadSheet(spreadSheetId);
 
         verify(googleSpreadsheetMapper).maptoEntity(googleSpreadsheet);
 
