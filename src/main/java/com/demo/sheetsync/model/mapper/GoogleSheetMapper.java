@@ -1,7 +1,7 @@
-package com.demo.sheetsync.model.entity.dto.mapper;
+package com.demo.sheetsync.model.entity.mapper;
 
 import com.demo.sheetsync.model.entity.Sheet;
-import com.google.api.services.sheets.v4.model.Spreadsheet;
+import com.demo.sheetsync.model.entity.SpreadSheet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,17 +11,15 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class GoogleSheetMapper {
 
-    private final GoogleSpreadsheetMapper googleSpreadsheetMapper;
-
     public Sheet mapToEntity(com.google.api.services.sheets.v4.model.Sheet googleSheet,
-                             Spreadsheet parentGoogleSpreadSheet){
+                             SpreadSheet parentSpreadSheet){
 
         return Sheet.builder()
                 .sheetId(googleSheet.getProperties().getSheetId())
                 .title(googleSheet.getProperties().getTitle())
                 .headers(new ArrayList<>())
                 .rows(new ArrayList<>())
-                .spreadSheet(googleSpreadsheetMapper.maptoEntity(parentGoogleSpreadSheet))
+                .spreadSheet(parentSpreadSheet)
                 .build();
     }
 

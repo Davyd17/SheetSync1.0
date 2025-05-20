@@ -1,4 +1,4 @@
-package com.demo.sheetsync.model.entity.dto.response;
+package com.demo.sheetsync.model.dto.response;
 
 import com.demo.sheetsync.model.entity.Sheet;
 import lombok.AllArgsConstructor;
