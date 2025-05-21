@@ -1,4 +1,4 @@
-package com.demo.sheetsync.model.entity.mapper;
+package com.demo.sheetsync.model.mapper;
 
 import com.demo.sheetsync.model.entity.SpreadSheet;
 import com.google.api.services.sheets.v4.model.Spreadsheet;

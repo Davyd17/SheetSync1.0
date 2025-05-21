@@ -2,6 +2,7 @@ package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.exception.GoogleSheetAccessException;
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +19,16 @@ public class GoogleSheetsService {
     private final Sheets sheets;
     private static final Logger logger = LoggerFactory.getLogger(SpreadSheetService.class);
 
+
+    protected Spreadsheet getGoogleSpreadSheet(String spreadSheetId){
+
+        return tryGetGoogleSpreadSheet(spreadSheetId);
+    }
+
+    protected List<Sheet> getGoogleSheets(String spreadSheetId){
+
+        return tryGetGoogleSpreadSheet(spreadSheetId).getSheets();
+    }
 
     private Spreadsheet tryGetGoogleSpreadSheet(String spreadSheetId){
 
@@ -37,9 +49,6 @@ public class GoogleSheetsService {
 
     }
 
-    protected Spreadsheet getGoogleSpreadSheet(String spreadSheetId){
 
-        return tryGetGoogleSpreadSheet(spreadSheetId);
-    }
 
 }
