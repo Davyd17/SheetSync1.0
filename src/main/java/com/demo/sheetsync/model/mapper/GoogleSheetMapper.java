@@ -1,4 +1,4 @@
-package com.demo.sheetsync.model.entity.mapper;
+package com.demo.sheetsync.model.mapper;
 
 import com.demo.sheetsync.model.entity.Sheet;
 import com.demo.sheetsync.model.entity.SpreadSheet;
