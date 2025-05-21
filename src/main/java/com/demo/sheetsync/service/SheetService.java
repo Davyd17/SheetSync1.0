@@ -1,18 +1,13 @@
 package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.model.entity.Sheet;
-import com.demo.sheetsync.model.dto.response.SheetResponse;
 import com.demo.sheetsync.model.entity.SpreadSheet;
 import com.demo.sheetsync.model.mapper.GoogleSheetMapper;
-import com.demo.sheetsync.model.mapper.SheetMapper;
-import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
 import com.demo.sheetsync.repository.SheetRepository;
-import com.demo.sheetsync.repository.SpreadSheetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
