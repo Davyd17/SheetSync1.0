@@ -1,7 +1,7 @@
 package com.demo.sheetsync.model.mapper;
 
-import com.demo.sheetsync.model.entity.Sheet;
-import com.demo.sheetsync.model.entity.SpreadSheet;
+import com.demo.sheetsync.model.entity.SheetApp;
+import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class GoogleSheetMapper {
 
-    public Sheet mapToEntity(com.google.api.services.sheets.v4.model.Sheet googleSheet,
-                             SpreadSheet parentSpreadSheet){
+    public SheetApp mapToEntity(com.google.api.services.sheets.v4.model.Sheet googleSheet,
+                                SpreadSheetApp parentSpreadSheet){
 
-        return Sheet.builder()
+        return SheetApp.builder()
                 .sheetId(googleSheet.getProperties().getSheetId())
                 .title(googleSheet.getProperties().getTitle())
                 .headers(new ArrayList<>())
