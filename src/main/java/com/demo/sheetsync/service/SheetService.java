@@ -1,7 +1,7 @@
 package com.demo.sheetsync.service;
 
-import com.demo.sheetsync.model.entity.Sheet;
-import com.demo.sheetsync.model.entity.SpreadSheet;
+import com.demo.sheetsync.model.entity.SheetApp;
+import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSheetMapper;
 import com.demo.sheetsync.repository.SheetRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,9 @@ public class SheetService {
     private final GoogleSheetMapper googleSheetMapper;
     private final SheetRepository sheetRepository;
 
-    public void saveAll(SpreadSheet spreadSheet) {
+    public void saveAll(SpreadSheetApp spreadSheet) {
 
-        List<Sheet> sheets = googleSheetsService
+        List<SheetApp> sheets = googleSheetsService
                 .getGoogleSheets(spreadSheet.getSpreadsheetId())
                 .stream().map(sheet -> {
 
@@ -30,7 +30,7 @@ public class SheetService {
         sheets.forEach(sheetRepository::save);
     }
 
-    public List<Sheet> findAllBy(String spreadSheetId){
+    public List<SheetApp> findAllBy(String spreadSheetId){
 
         return null;
 
