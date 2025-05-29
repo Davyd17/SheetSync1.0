@@ -19,7 +19,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sheet {
+public class SheetApp {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -41,5 +41,5 @@ public class Sheet {
 
     @ManyToOne
     @JoinColumn(name = "spreadsheet_id", nullable = false)
-    private SpreadSheet spreadSheet;
+    private SpreadSheetApp spreadSheet;
 }
