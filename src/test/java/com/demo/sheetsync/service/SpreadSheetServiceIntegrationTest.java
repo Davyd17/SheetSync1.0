@@ -1,11 +1,9 @@
 package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.model.entity.SpreadSheet;
-import com.demo.sheetsync.model.entity.dto.mapper.GoogleSpreadsheetMapper;
-import com.demo.sheetsync.model.entity.dto.request.SpreadSheetDataRequest;
-import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
+import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
+import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
-import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import org.junit.jupiter.api.Test;
@@ -67,7 +65,7 @@ public class SpreadSheetServiceIntegrationTest {
         when(googleMapper.maptoEntity(googleSpreadsheet)).thenReturn(entity);
 
         //When
-        SpreadSheetDataResponse result = service.saveSpreadSheet(spreadSheetId);
+        SpreadSheetResponse result = service.saveSpreadSheet(spreadSheetId);
 
         //Then
         assertNotNull(result);

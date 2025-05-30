@@ -1,12 +1,10 @@
 package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.model.entity.SpreadSheet;
-import com.demo.sheetsync.model.entity.dto.mapper.GoogleSpreadsheetMapper;
-import com.demo.sheetsync.model.entity.dto.mapper.SpreadSheetDataMapper;
-import com.demo.sheetsync.model.entity.dto.request.SpreadSheetDataRequest;
-import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
+import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
+import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
+import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
-import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +28,7 @@ class SpreadSheetServiceTest {
     GoogleSpreadsheetMapper googleSpreadsheetMapper;
 
     @Mock
-    SpreadSheetDataMapper spreadSheetDataMapper;
+    SpreadSheetMapper spreadSheetMapper;
 
     @Mock
     GoogleSheetsService googleSheetsService;
@@ -53,8 +51,8 @@ class SpreadSheetServiceTest {
 
         SpreadSheet savedEntity = new SpreadSheet();
 
-        SpreadSheetDataResponse response =
-                new SpreadSheetDataResponse();
+        SpreadSheetResponse response =
+                new SpreadSheetResponse();
 
         when(googleSheetsService.getGoogleSpreadSheet(spreadSheetId))
                 .thenReturn(googleSpreadsheet);
@@ -65,11 +63,11 @@ class SpreadSheetServiceTest {
 
         when(repository.save(spreadSheetEntity)).thenReturn(savedEntity);
 
-        when(spreadSheetDataMapper
+        when(spreadSheetMapper
                 .toResponse(savedEntity)).thenReturn(response);
 
         //Act
-        SpreadSheetDataResponse result = service.saveSpreadSheet(spreadSheetId);
+        SpreadSheetResponse result = service.saveSpreadSheet(spreadSheetId);
 
         //Assert
         assertEquals(response, result);
@@ -80,7 +78,7 @@ class SpreadSheetServiceTest {
 
         verify(repository).save(spreadSheetEntity);
 
-        verify(spreadSheetDataMapper).toResponse(savedEntity);
+        verify(spreadSheetMapper).toResponse(savedEntity);
     }
 
 }

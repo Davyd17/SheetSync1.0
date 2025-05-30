@@ -1,6 +1,6 @@
 package com.demo.sheetsync.controller;
 
-import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
+import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import com.demo.sheetsync.service.SpreadSheetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ public class SpreadSheetController {
     private final SpreadSheetService service;
 
     @GetMapping("/{spreadSheetId}")
-    public ResponseEntity<SpreadSheetDataResponse> save(@PathVariable String spreadSheetId) {
+    public ResponseEntity<SpreadSheetResponse> save(@PathVariable String spreadSheetId) {
 
         return ResponseEntity.ok(
                 service.saveSpreadSheet(spreadSheetId)
