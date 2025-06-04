@@ -1,8 +1,10 @@
 package com.demo.sheetsync.service;
 
+import com.demo.sheetsync.model.dto.response.SheetResponse;
 import com.demo.sheetsync.model.entity.SheetApp;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSheetMapper;
+import com.demo.sheetsync.model.mapper.SheetMapper;
 import com.demo.sheetsync.repository.SheetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,10 @@ import java.util.List;
 public class SheetService {
     private final GoogleSheetsService googleSheetsService;
     private final GoogleSheetMapper googleSheetMapper;
+    private final SheetMapper sheetMapper;
     private final SheetRepository sheetRepository;
 
-    public void saveAll(SpreadSheetApp spreadSheet) {
+    public List<SheetResponse> saveAllSheets(SpreadSheetApp spreadSheet) {
 
         List<SheetApp> sheets = googleSheetsService
                 .getGoogleSheets(spreadSheet.getSpreadsheetId())
@@ -27,7 +30,9 @@ public class SheetService {
                 })
                 .toList();
 
-        sheets.forEach(sheetRepository::save);
+        return sheetRepository.saveAll(sheets)
+                .stream().map(sheetMapper::toResponse)
+                .toList();
     }
 
     public List<SheetApp> findAllBy(String spreadSheetId){

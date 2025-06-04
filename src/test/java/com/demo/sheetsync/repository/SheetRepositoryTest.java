@@ -1,7 +1,7 @@
 package com.demo.sheetsync.repository;
 
-import com.demo.sheetsync.model.entity.Sheet;
-import com.demo.sheetsync.model.entity.SpreadSheet;
+import com.demo.sheetsync.model.entity.SheetApp;
+import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.github.dockerjava.api.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,8 +33,8 @@ class SheetRepositoryTest {
     @BeforeEach
     void setUp() {
 
-        //We save a spreadsheet before interact with the Sheet to apply the relation between them
-        spreadSheetRepository.save(SpreadSheet.builder()
+        //We save a spreadsheet before interact with the SheetApp to apply the relation between them
+        spreadSheetRepository.save(SpreadSheetApp.builder()
                 .spreadsheetId("spreadSheetMockId")
                 .title("testTitle")
                 .build());
@@ -59,15 +59,15 @@ class SheetRepositoryTest {
 
         data.add(row);
 
-        //Get the SpreadSheet saved previously
-        SpreadSheet spreadSheet = spreadSheetRepository
+        //Get the SpreadSheetApp saved previously
+        SpreadSheetApp spreadSheet = spreadSheetRepository
                 .findById(1)
                 .orElseThrow(() -> new NotFoundException(
                         "spreadSheet Not Found"
                 ));
 
-        //Save the Sheet with the related SpreadSheet saved previously
-        Sheet sheet = Sheet.builder()
+        //Save the SheetApp with the related SpreadSheetApp saved previously
+        SheetApp sheet = SheetApp.builder()
                 .sheetId(1234)
                 .headers(headers)
                 .spreadSheet(spreadSheet)
@@ -79,9 +79,9 @@ class SheetRepositoryTest {
         sheetRepository.save(sheet);
 
         //Then
-        Sheet savedSheet = sheetRepository.findById(1)
+        SheetApp savedSheet = sheetRepository.findById(1)
                 .orElseThrow(() -> new NotFoundException(
-                        "Sheet not found"
+                        "SheetApp not found"
                 ));
 
         assertThat(savedSheet.getRows()).isEqualTo(data);
