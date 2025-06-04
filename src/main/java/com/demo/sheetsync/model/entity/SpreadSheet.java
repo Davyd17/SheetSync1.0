@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpreadSheet {
+public class SpreadSheetApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,6 @@ public class SpreadSheet {
     private String title;
 
     @OneToMany(mappedBy = "spreadSheet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Sheet> sheets;
+    private List<SheetApp> sheets;
 
 }

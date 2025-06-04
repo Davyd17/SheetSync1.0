@@ -1,4 +1,4 @@
-package com.demo.sheetsync.model.entity.dto.request;
+package com.demo.sheetsync.model.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
