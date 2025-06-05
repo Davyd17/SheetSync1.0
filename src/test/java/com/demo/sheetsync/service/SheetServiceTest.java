@@ -84,14 +84,12 @@ class SheetServiceTest {
         responseMappedSheet1.setTitle("sheet1 title");
         responseMappedSheet1.setHeaders(new ArrayList<>());
         responseMappedSheet1.setRows(new ArrayList<>());
-        responseMappedSheet1.setSpreadSheet(spreadSheet);
 
         SheetResponse responseMappedSheet2 = new SheetResponse();
         responseMappedSheet2.setSheetId(4321);
         responseMappedSheet2.setTitle("sheet2 title");
         responseMappedSheet2.setHeaders(new ArrayList<>());
         responseMappedSheet2.setRows(new ArrayList<>());
-        responseMappedSheet2.setSpreadSheet(spreadSheet);
 
         when(googleSheetsService.getGoogleSheets(spreadSheet.getSpreadsheetId()))
                 .thenReturn(List.of(googleSheet1, googleSheet2));

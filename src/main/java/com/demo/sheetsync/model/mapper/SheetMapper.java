@@ -14,7 +14,6 @@ public class SheetMapper {
                 .title(sheet.getTitle())
                 .headers(sheet.getHeaders())
                 .rows(sheet.getRows())
-                .spreadSheet(sheet.getSpreadSheet())
                 .build();
     }
 
@@ -25,7 +24,6 @@ public class SheetMapper {
                 .title(response.getTitle())
                 .headers(response.getHeaders())
                 .rows(response.getRows())
-                .spreadSheet(response.getSpreadSheet())
                 .build();
     }
 

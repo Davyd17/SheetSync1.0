@@ -18,5 +18,4 @@ public class SheetResponse {
     private String title;
     private List<String> headers;
     private List<LinkedHashMap<String, Object>> rows;
-    private SpreadSheetApp spreadSheet;
 }
