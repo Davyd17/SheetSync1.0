@@ -1,12 +1,14 @@
 package com.demo.sheetsync.repository;
 
-import com.demo.sheetsync.model.entity.SpreadSheet;
+import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface SpreadSheetRepository extends JpaRepository<SpreadSheet, Integer> {
+import java.util.Optional;
 
-    SpreadSheet findBySpreadsheetId(String spreadsheetId);
+@Repository
+public interface SpreadSheetRepository extends JpaRepository<SpreadSheetApp, Integer> {
+
+    Optional<SpreadSheetApp> findBySpreadsheetId(String spreadsheetId);
 
 }

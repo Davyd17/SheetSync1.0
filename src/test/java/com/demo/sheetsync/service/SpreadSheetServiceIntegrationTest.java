@@ -1,11 +1,10 @@
 package com.demo.sheetsync.service;
 
-import com.demo.sheetsync.model.entity.SpreadSheet;
-import com.demo.sheetsync.model.entity.dto.mapper.GoogleSpreadsheetMapper;
-import com.demo.sheetsync.model.entity.dto.request.SpreadSheetDataRequest;
-import com.demo.sheetsync.model.entity.dto.response.SpreadSheetDataResponse;
+import com.demo.sheetsync.model.dto.response.SheetResponse;
+import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
+import com.demo.sheetsync.model.entity.SpreadSheetApp;
+import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
-import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -52,7 +50,7 @@ public class SpreadSheetServiceIntegrationTest {
         googleSpreadsheet.setProperties(new SpreadsheetProperties()
                 .setTitle("test sheet"));
 
-        SpreadSheet entity = SpreadSheet.builder()
+        SpreadSheetApp entity = SpreadSheetApp.builder()
                 .id(null)
                 .spreadsheetId(spreadSheetId)
                 .title("test sheet")
@@ -67,7 +65,7 @@ public class SpreadSheetServiceIntegrationTest {
         when(googleMapper.maptoEntity(googleSpreadsheet)).thenReturn(entity);
 
         //When
-        SpreadSheetDataResponse result = service.saveSpreadSheet(spreadSheetId);
+        SpreadSheetResponse result = service.saveSpreadSheet(spreadSheetId);
 
         //Then
         assertNotNull(result);
@@ -75,9 +73,9 @@ public class SpreadSheetServiceIntegrationTest {
         assertEquals(spreadSheetId, result.getSpreadsheetId());
 
         //check persistence
-        List<SpreadSheet> all = repository.findAll();
+        List<SpreadSheetApp> all = repository.findAll();
         assertEquals(1, all.size());
-        SpreadSheet saved = all.get(0);
+        SpreadSheetApp saved = all.get(0);
         assertEquals("test sheet", saved.getTitle());
         assertEquals(spreadSheetId, saved.getSpreadsheetId());
     }
