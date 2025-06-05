@@ -20,7 +20,13 @@ public class SheetMapper {
 
     public SheetApp toEntity(SheetResponse response){
 
-        return new SheetApp();
+        return SheetApp.builder()
+                .sheetId(response.getSheetId())
+                .title(response.getTitle())
+                .headers(response.getHeaders())
+                .rows(response.getRows())
+                .spreadSheet(response.getSpreadSheet())
+                .build();
     }
 
 
