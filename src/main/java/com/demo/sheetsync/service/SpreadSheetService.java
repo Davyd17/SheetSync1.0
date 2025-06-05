@@ -1,6 +1,7 @@
 package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.exception.NotFoundException;
+import com.demo.sheetsync.model.dto.response.SheetResponse;
 import com.demo.sheetsync.model.entity.SheetApp;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
@@ -25,8 +26,6 @@ public class SpreadSheetService {
     private final SpreadSheetMapper spreadSheetMapper;
     private final GoogleSheetsService googleSheetsService;
     private final SheetService sheetService;
-    private final SheetMapper sheetMapper;
-
 
     public SpreadSheetResponse saveSpreadSheet(String spreadSheetId)  {
 
@@ -35,15 +34,15 @@ public class SpreadSheetService {
 
         SpreadSheetApp spreadSheet = googleSpreadsheetMapper.maptoEntity(googleSpreadSheet);
 
-        List<SheetApp> relatedSheets = sheetService
-                .saveAllSheets(spreadSheet).stream()
-                .map(sheetMapper::toEntity)
-                .toList();
-
-        spreadSheet.setSheets(relatedSheets);
-
-        return spreadSheetMapper
+        SpreadSheetResponse response = spreadSheetMapper
                 .toResponse(repository.save(spreadSheet));
+
+        List<SheetResponse> relatedSheets = sheetService
+                .saveAllSheets(spreadSheet);
+
+        response.setSheets(relatedSheets);
+
+        return response;
     }
 
     public SpreadSheetResponse getSpreadSheet(String spreadSheetId){

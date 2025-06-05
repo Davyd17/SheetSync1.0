@@ -18,5 +18,5 @@ public class SpreadSheetResponse {
 
     private String title;
 
-    private List<SheetApp> sheets;
+    private List<SheetResponse> sheets;
 }

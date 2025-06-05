@@ -75,15 +75,12 @@ public class SpreadSheetServiceIntegrationTest {
         sheetResponse1.setTitle("sheet1 title");
         sheetResponse1.setHeaders(new ArrayList<>());
         sheetResponse1.setRows(new ArrayList<>());
-        sheetResponse1.setSpreadSheet(spreadSheet);
 
         SheetResponse sheetResponse2 = new SheetResponse();
         sheetResponse2.setSheetId(4321);
         sheetResponse2.setTitle("sheet2 title");
         sheetResponse2.setHeaders(new ArrayList<>());
         sheetResponse2.setRows(new ArrayList<>());
-        sheetResponse2.setSpreadSheet(spreadSheet);
-
 
         when(googleSheetsService
                 .getGoogleSpreadSheet(spreadSheetId))
