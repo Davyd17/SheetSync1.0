@@ -35,12 +35,12 @@ public class SpreadSheetService {
 
         SpreadSheetApp spreadSheet = googleSpreadsheetMapper.maptoEntity(googleSpreadSheet);
 
-        List<SheetApp> relatedSavedSheets = sheetService
+        List<SheetApp> relatedSheets = sheetService
                 .saveAllSheets(spreadSheet).stream()
                 .map(sheetMapper::toEntity)
                 .toList();
 
-        spreadSheet.setSheets(relatedSavedSheets);
+        spreadSheet.setSheets(relatedSheets);
 
         return spreadSheetMapper
                 .toResponse(repository.save(spreadSheet));
