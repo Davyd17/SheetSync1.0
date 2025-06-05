@@ -1,8 +1,11 @@
 package com.demo.sheetsync.service;
 
+import com.demo.sheetsync.model.dto.response.SheetResponse;
 import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
+import com.demo.sheetsync.model.entity.SheetApp;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
+import com.demo.sheetsync.model.mapper.SheetMapper;
 import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
@@ -13,10 +16,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SpreadSheetServiceTest {
@@ -33,6 +37,12 @@ class SpreadSheetServiceTest {
     @Mock
     GoogleSheetsService googleSheetsService;
 
+    @Mock
+    SheetService sheetService;
+
+    @Mock
+    SheetMapper sheetMapper;
+
     @InjectMocks
     SpreadSheetService service;
 
@@ -44,38 +54,58 @@ class SpreadSheetServiceTest {
 
         Spreadsheet googleSpreadsheet = new Spreadsheet();
 
-        SpreadSheetApp spreadSheetEntity = new SpreadSheetApp();
+        SpreadSheetApp spreadSheet = new SpreadSheetApp();
 
-        SpreadSheetApp savedEntity = new SpreadSheetApp();
+        SpreadSheetApp savedSpreadSheet = new SpreadSheetApp();
 
-        SpreadSheetResponse response =
+        SpreadSheetResponse spreadSheetResponse =
                 new SpreadSheetResponse();
+
+        SheetApp savedSheet1 = new SheetApp();
+
+        SheetApp savedSheet2 = new SheetApp();
+
+        SheetResponse sheetResponse1 = new SheetResponse();
+
+        SheetResponse sheetResponse2 = new SheetResponse();
 
         when(googleSheetsService.getGoogleSpreadSheet(spreadSheetId))
                 .thenReturn(googleSpreadsheet);
 
         when(googleSpreadsheetMapper
                 .maptoEntity(googleSpreadsheet))
-                .thenReturn(spreadSheetEntity);
+                .thenReturn(spreadSheet);
 
-        when(repository.save(spreadSheetEntity)).thenReturn(savedEntity);
+        when(sheetService.saveAllSheets(spreadSheet)).thenReturn(
+                List.of(sheetResponse1, sheetResponse2)
+        );
+
+        when(sheetMapper.toEntity(sheetResponse1)).thenReturn(savedSheet1);
+
+        when(sheetMapper.toEntity(sheetResponse2)).thenReturn(savedSheet2);
+
+        when(repository.save(spreadSheet)).thenReturn(savedSpreadSheet);
 
         when(spreadSheetMapper
-                .toResponse(savedEntity)).thenReturn(response);
+                .toResponse(savedSpreadSheet)).thenReturn(spreadSheetResponse);
 
         //Act
         SpreadSheetResponse result = service.saveSpreadSheet(spreadSheetId);
 
         //Assert
-        assertEquals(response, result);
+        assertEquals(spreadSheetResponse, result);
 
         verify(googleSheetsService).getGoogleSpreadSheet(spreadSheetId);
 
         verify(googleSpreadsheetMapper).maptoEntity(googleSpreadsheet);
 
-        verify(repository).save(spreadSheetEntity);
+        verify(sheetService).saveAllSheets(spreadSheet);
 
-        verify(spreadSheetMapper).toResponse(savedEntity);
+        verify(sheetMapper, times(2)).toEntity(any(SheetResponse.class));
+
+        verify(repository).save(spreadSheet);
+
+        verify(spreadSheetMapper).toResponse(savedSpreadSheet);
     }
 
 }
