@@ -9,6 +9,7 @@ import com.demo.sheetsync.repository.SheetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,9 +24,13 @@ public class SheetService {
 
         List<SheetApp> sheets = googleSheetsService
                 .getGoogleSheets(spreadSheet.getSpreadsheetId())
-                .stream().map(sheet -> {
+                .stream().map(googleSheet -> {
 
-                    return googleSheetMapper.mapToEntity(sheet, spreadSheet);
+                    SheetApp sheet = googleSheetMapper.mapToEntity(googleSheet, spreadSheet);
+
+                    sheet.setHeaders(getHeaders(spreadSheet.getSpreadsheetId()));
+
+                    return sheet;
 
                 })
                 .toList();
@@ -35,13 +40,24 @@ public class SheetService {
                 .toList();
     }
 
-    public List<SheetApp> findAllBy(String spreadSheetId){
 
-        return null;
+    private List<String> getHeaders(String spreadSheetId) {
+
+        List<List<Object>> data = googleSheetsService
+                .getData(spreadSheetId, "Hoja 1!A1:C");
+
+        if(data == null || data.isEmpty())
+            return new ArrayList<>();
+
+        return data.get(0)
+                .stream()
+                .map(Object::toString)
+                .toList();
+    }
+
 
     }
 
 
 
 
-}
