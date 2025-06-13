@@ -28,7 +28,7 @@ public class SheetService {
 
                     SheetApp sheet = googleSheetMapper.mapToEntity(googleSheet, spreadSheet);
 
-                    sheet.setHeaders(getHeaders(spreadSheet.getSpreadsheetId()));
+                    sheet.setHeaders(getHeaders(sheet));
 
                     return sheet;
 
@@ -41,10 +41,16 @@ public class SheetService {
     }
 
 
-    private List<String> getHeaders(String spreadSheetId) {
+    private List<String> getHeaders(SheetApp sheet) {
+
+        String spreadSheetId = sheet.getSpreadSheet()
+                .getSpreadsheetId();
+
+        String sheetTitle = sheet.getTitle();
 
         List<List<Object>> data = googleSheetsService
-                .getData(spreadSheetId, "Hoja 1!A1:C");
+                .getData(spreadSheetId,
+                        sheetTitle + "!A1:C");
 
         if(data == null || data.isEmpty())
             return new ArrayList<>();
