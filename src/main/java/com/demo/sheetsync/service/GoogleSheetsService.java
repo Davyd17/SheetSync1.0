@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,8 +34,10 @@ public class GoogleSheetsService {
 
     protected List<List<Object>> getData(String spreadSheetId, String range){
 
-        return tryGetData(spreadSheetId, range).getValues();
+        ValueRange googleData = tryGetData(spreadSheetId, range);
 
+        return googleData.isEmpty()?
+                new ArrayList<>() : googleData.getValues();
     }
 
     private ValueRange tryGetData(String spreadSheetId, String range){
