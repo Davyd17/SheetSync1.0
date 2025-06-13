@@ -30,7 +30,7 @@ public class SheetService {
 
                     SheetApp sheet = googleSheetMapper.mapToEntity(googleSheet, spreadSheet);
 
-                    sheet.setHeaders(getHeaders(spreadSheet.getSpreadsheetId()));
+                    sheet.setHeaders(getHeaders(sheet));
                     sheet.setRows(getData(sheet));
 
                     return sheet;
