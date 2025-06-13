@@ -44,10 +44,16 @@ public class SheetService {
     }
 
 
-    private List<String> getHeaders(String spreadSheetId) {
+    private List<String> getHeaders(SheetApp sheet) {
+
+        String spreadSheetId = sheet.getSpreadSheet()
+                .getSpreadsheetId();
+
+        String sheetTitle = sheet.getTitle();
 
         List<List<Object>> data = googleSheetsService
-                .getData(spreadSheetId, "Hoja 1!A1:C");
+                .getData(spreadSheetId,
+                        sheetTitle + "!A1:C");
 
         return data.get(0)
                 .stream()
