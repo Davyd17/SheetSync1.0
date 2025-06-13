@@ -14,7 +14,7 @@ public class SpreadSheetController {
     private final SpreadSheetService service;
 
     @GetMapping("/{spreadSheetId}")
-    public ResponseEntity<SpreadSheetResponse> save(@PathVariable String spreadSheetId) {
+    public ResponseEntity<SpreadSheetResponse> saveFromGoogleSheet(@PathVariable String spreadSheetId) {
 
         return ResponseEntity.ok(
                 service.saveSpreadSheet(spreadSheetId)
