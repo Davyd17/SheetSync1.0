@@ -9,7 +9,10 @@ import com.demo.sheetsync.repository.SheetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +26,14 @@ public class SheetService {
 
         List<SheetApp> sheets = googleSheetsService
                 .getGoogleSheets(spreadSheet.getSpreadsheetId())
-                .stream().map(sheet -> {
+                .stream().map(googleSheet -> {
 
-                    return googleSheetMapper.mapToEntity(sheet, spreadSheet);
+                    SheetApp sheet = googleSheetMapper.mapToEntity(googleSheet, spreadSheet);
+
+                    sheet.setHeaders(getHeaders(sheet));
+                    sheet.setRows(getData(sheet));
+
+                    return sheet;
 
                 })
                 .toList();
@@ -35,13 +43,55 @@ public class SheetService {
                 .toList();
     }
 
-    public List<SheetApp> findAllBy(String spreadSheetId){
 
-        return null;
+    private List<String> getHeaders(SheetApp sheet) {
+
+        String spreadSheetId = sheet.getSpreadSheet()
+                .getSpreadsheetId();
+
+        String sheetTitle = sheet.getTitle();
+
+        List<List<Object>> data = googleSheetsService
+                .getData(spreadSheetId,
+                        sheetTitle + "!A1:C");
+
+        return data.get(0)
+                .stream()
+                .map(Object::toString)
+                .toList();
+    }
+
+    private List<LinkedHashMap<String, Object>> getData(SheetApp sheet){
+
+        String spreadSheetId = sheet.getSpreadSheet()
+                .getSpreadsheetId();
+
+        List<LinkedHashMap<String, Object>> data = new ArrayList<>();
+
+        LinkedHashMap<String, Object> row = new LinkedHashMap<>();
+
+        List<List<Object>> googleData = googleSheetsService
+                .getData(spreadSheetId, "Hoja 1!A2:C");
+
+            for(List<Object> googleRow : googleData){
+
+                for(int i = 0; i < sheet.getHeaders().size(); i++){
+
+                    row.put(sheet.getHeaders().get(i), googleRow.get(i));
+
+                }
+
+                data.add(row);
+
+        }
+
+    return data;
+
+    }
+
 
     }
 
 
 
 
-}
