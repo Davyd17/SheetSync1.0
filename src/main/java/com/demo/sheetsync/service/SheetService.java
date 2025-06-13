@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class SheetService {
                     SheetApp sheet = googleSheetMapper.mapToEntity(googleSheet, spreadSheet);
 
                     sheet.setHeaders(getHeaders(spreadSheet.getSpreadsheetId()));
+                    sheet.setRows(getData(sheet));
 
                     return sheet;
 
@@ -46,13 +49,38 @@ public class SheetService {
         List<List<Object>> data = googleSheetsService
                 .getData(spreadSheetId, "Hoja 1!A1:C");
 
-        if(data == null || data.isEmpty())
-            return new ArrayList<>();
-
         return data.get(0)
                 .stream()
                 .map(Object::toString)
                 .toList();
+    }
+
+    private List<LinkedHashMap<String, Object>> getData(SheetApp sheet){
+
+        String spreadSheetId = sheet.getSpreadSheet()
+                .getSpreadsheetId();
+
+        List<LinkedHashMap<String, Object>> data = new ArrayList<>();
+
+        LinkedHashMap<String, Object> row = new LinkedHashMap<>();
+
+        List<List<Object>> googleData = googleSheetsService
+                .getData(spreadSheetId, "Hoja 1!A2:C");
+
+            for(List<Object> googleRow : googleData){
+
+                for(int i = 0; i < sheet.getHeaders().size(); i++){
+
+                    row.put(sheet.getHeaders().get(i), googleRow.get(i));
+
+                }
+
+                data.add(row);
+
+        }
+
+    return data;
+
     }
 
 
