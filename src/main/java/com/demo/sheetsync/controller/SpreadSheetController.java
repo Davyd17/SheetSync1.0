@@ -13,12 +13,20 @@ public class SpreadSheetController {
 
     private final SpreadSheetService service;
 
-    @GetMapping("/{spreadSheetId}")
+    @PostMapping("persist/{spreadSheetId}")
     public ResponseEntity<SpreadSheetResponse> saveFromGoogleSheet(@PathVariable String spreadSheetId) {
 
         return ResponseEntity.ok(
                 service.saveSpreadSheet(spreadSheetId)
         );
 
+    }
+
+    @GetMapping("get/{spreadSheetId}")
+    public ResponseEntity<SpreadSheetResponse> getSpreadSheet(@PathVariable String spreadSheetId){
+
+        return ResponseEntity.ok(
+                service.getSpreadSheet(spreadSheetId)
+        );
     }
 }
