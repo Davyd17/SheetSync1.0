@@ -1,17 +1,15 @@
 package com.demo.sheetsync.service;
 
-import com.demo.sheetsync.model.dto.response.SheetResponse;
+import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.model.entity.SheetApp;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSheetMapper;
 import com.demo.sheetsync.model.mapper.SheetMapper;
-import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
 import com.demo.sheetsync.repository.SheetRepository;
 import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.SheetProperties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -79,17 +77,15 @@ class SheetServiceTest {
                 .spreadSheet(spreadSheet)
                 .build();
 
-        SheetResponse responseMappedSheet1 = new SheetResponse();
+        SheetSummaryResponse responseMappedSheet1 = new SheetSummaryResponse();
         responseMappedSheet1.setSheetId(1234);
         responseMappedSheet1.setTitle("sheet1 title");
         responseMappedSheet1.setHeaders(new ArrayList<>());
-        responseMappedSheet1.setRows(new ArrayList<>());
 
-        SheetResponse responseMappedSheet2 = new SheetResponse();
+        SheetSummaryResponse responseMappedSheet2 = new SheetSummaryResponse();
         responseMappedSheet2.setSheetId(4321);
         responseMappedSheet2.setTitle("sheet2 title");
         responseMappedSheet2.setHeaders(new ArrayList<>());
-        responseMappedSheet2.setRows(new ArrayList<>());
 
         when(googleSheetsService.getGoogleSheets(spreadSheet.getSpreadsheetId()))
                 .thenReturn(List.of(googleSheet1, googleSheet2));
@@ -103,14 +99,14 @@ class SheetServiceTest {
         when(sheetRepository.saveAll(List.of(mappedSheet1, mappedSheet2)))
                 .thenReturn(List.of(mappedSheet1, mappedSheet2));
 
-        when(sheetMapper.toResponse(mappedSheet1))
+        when(sheetMapper.toSummaryResponse(mappedSheet1))
                 .thenReturn(responseMappedSheet1);
 
-        when(sheetMapper.toResponse(mappedSheet2))
+        when(sheetMapper.toSummaryResponse(mappedSheet2))
                 .thenReturn(responseMappedSheet2);
 
         //When
-        List<SheetResponse> savedSheets = sheetService
+        List<SheetSummaryResponse> savedSheets = sheetService
                 .saveAllSheets(spreadSheet);
 
         //Then
@@ -127,7 +123,7 @@ class SheetServiceTest {
                 .mapToEntity(any(Sheet.class), any(SpreadSheetApp.class));
 
         verify(sheetMapper, times(2))
-                .toResponse(any(SheetApp.class));
+                .toSummaryResponse(any(SheetApp.class));
 
         verify(sheetRepository).saveAll(List.of(
                 mappedSheet1,

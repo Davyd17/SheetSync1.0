@@ -1,6 +1,5 @@
 package com.demo.sheetsync.model.mapper;
 
-import com.demo.sheetsync.model.dto.response.SheetResponse;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ public class SpreadSheetMapper {
                 spreadSheet.getSpreadsheetId(),
                 spreadSheet.getTitle(),
                 spreadSheet.getSheets().stream()
-                        .map(sheetMapper::toResponse)
+                        .map(sheetMapper::toSummaryResponse)
                         .toList()
         );
 

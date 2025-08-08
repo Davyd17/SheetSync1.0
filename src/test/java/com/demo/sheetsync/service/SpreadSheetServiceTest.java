@@ -1,6 +1,6 @@
 package com.demo.sheetsync.service;
 
-import com.demo.sheetsync.model.dto.response.SheetResponse;
+import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import com.demo.sheetsync.model.entity.SheetApp;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
@@ -65,9 +65,9 @@ class SpreadSheetServiceTest {
 
         SheetApp savedSheet2 = new SheetApp();
 
-        SheetResponse sheetResponse1 = new SheetResponse();
+        SheetSummaryResponse sheetSummaryResponse1 = new SheetSummaryResponse();
 
-        SheetResponse sheetResponse2 = new SheetResponse();
+        SheetSummaryResponse sheetSummaryResponse2 = new SheetSummaryResponse();
 
         when(googleSheetsService.getGoogleSpreadSheet(spreadSheetId))
                 .thenReturn(googleSpreadsheet);
@@ -77,12 +77,12 @@ class SpreadSheetServiceTest {
                 .thenReturn(spreadSheet);
 
         when(sheetService.saveAllSheets(spreadSheet)).thenReturn(
-                List.of(sheetResponse1, sheetResponse2)
+                List.of(sheetSummaryResponse1, sheetSummaryResponse2)
         );
 
-        when(sheetMapper.toEntity(sheetResponse1)).thenReturn(savedSheet1);
+        when(sheetMapper.toEntity(sheetSummaryResponse1)).thenReturn(savedSheet1);
 
-        when(sheetMapper.toEntity(sheetResponse2)).thenReturn(savedSheet2);
+        when(sheetMapper.toEntity(sheetSummaryResponse2)).thenReturn(savedSheet2);
 
         when(repository.save(spreadSheet)).thenReturn(savedSpreadSheet);
 
@@ -101,7 +101,7 @@ class SpreadSheetServiceTest {
 
         verify(sheetService).saveAllSheets(spreadSheet);
 
-        verify(sheetMapper, times(2)).toEntity(any(SheetResponse.class));
+        verify(sheetMapper, times(2)).toEntity(any(SheetSummaryResponse.class));
 
         verify(repository).save(spreadSheet);
 

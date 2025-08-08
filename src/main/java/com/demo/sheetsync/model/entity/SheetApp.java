@@ -34,10 +34,10 @@ public class SheetApp {
     @Column(nullable = false)
     private List<String> headers;
 
-    // Serialize List<LinkedHashMap<String, Object>> as a JSONB PostgreSQL rows type using hibernate-types dependency
+    // Serialize as a JSONB PostgreSQL rows type using hibernate-types dependency
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb", nullable = false)
-    private List<LinkedHashMap<String, Object>> rows;
+    private List<List<Object>> rows;
 
     @ManyToOne
     @JoinColumn(name = "spreadsheet_id", nullable = false)

@@ -48,14 +48,10 @@ class SheetRepositoryTest {
         List<String> headers = List.of("name", "last name", "address");
 
         //Each row
-        LinkedHashMap<String, Object> row = new LinkedHashMap<>();
+        List<Object> row = List.of("Alex","Doe","20 Street");
 
         //The whole rows that will be saved
-        List<LinkedHashMap<String, Object>> data = new ArrayList<>();
-
-        row.put(headers.get(0), "Alex");
-        row.put(headers.get(1), "Doe");
-        row.put(headers.get(2), "20 Street");
+        List<List<Object>> data = new ArrayList<>();
 
         data.add(row);
 
