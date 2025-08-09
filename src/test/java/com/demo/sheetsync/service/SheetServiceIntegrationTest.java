@@ -1,6 +1,6 @@
 package com.demo.sheetsync.service;
 
-import com.demo.sheetsync.model.dto.response.SheetResponse;
+import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.model.entity.SheetApp;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.repository.SheetRepository;
@@ -79,7 +79,7 @@ class SheetServiceIntegrationTest {
                 .thenReturn(List.of(googleSheet1, googleSheet2));
 
         //Act
-        List<SheetResponse> savedSheets = sheetService.saveAllSheets(spreadSheet);
+        List<SheetSummaryResponse> savedSheets = sheetService.saveAllSheets(spreadSheet);
 
         //Assert
         List<SheetApp> persistSheets = sheetRepository.findAll();

@@ -1,14 +1,10 @@
 package com.demo.sheetsync.service;
 
-import com.demo.sheetsync.model.dto.response.SheetResponse;
+import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
-import com.demo.sheetsync.model.mapper.SheetMapper;
-import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
-import com.google.api.services.sheets.v4.model.Sheet;
-import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import org.junit.jupiter.api.Test;
@@ -70,17 +66,15 @@ public class SpreadSheetServiceIntegrationTest {
                 .sheets(new ArrayList<>())
                 .build();
 
-        SheetResponse sheetResponse1 = new SheetResponse();
-        sheetResponse1.setSheetId(1234);
-        sheetResponse1.setTitle("sheet1 title");
-        sheetResponse1.setHeaders(new ArrayList<>());
-        sheetResponse1.setRows(new ArrayList<>());
+        SheetSummaryResponse sheetSummaryResponse1 = new SheetSummaryResponse();
+        sheetSummaryResponse1.setSheetId(1234);
+        sheetSummaryResponse1.setTitle("sheet1 title");
+        sheetSummaryResponse1.setHeaders(new ArrayList<>());
 
-        SheetResponse sheetResponse2 = new SheetResponse();
-        sheetResponse2.setSheetId(4321);
-        sheetResponse2.setTitle("sheet2 title");
-        sheetResponse2.setHeaders(new ArrayList<>());
-        sheetResponse2.setRows(new ArrayList<>());
+        SheetSummaryResponse sheetSummaryResponse2 = new SheetSummaryResponse();
+        sheetSummaryResponse2.setSheetId(4321);
+        sheetSummaryResponse2.setTitle("sheet2 title");
+        sheetSummaryResponse2.setHeaders(new ArrayList<>());
 
         when(googleSheetsService
                 .getGoogleSpreadSheet(spreadSheetId))
@@ -91,7 +85,7 @@ public class SpreadSheetServiceIntegrationTest {
                 .thenReturn(spreadSheet);
 
         when(sheetService.saveAllSheets(spreadSheet))
-                .thenReturn(List.of(sheetResponse1, sheetResponse2));
+                .thenReturn((List.of(sheetSummaryResponse1, sheetSummaryResponse2)));
 
         //When
         SpreadSheetResponse result = service.saveSpreadSheet(spreadSheetId);
@@ -102,7 +96,7 @@ public class SpreadSheetServiceIntegrationTest {
         assertEquals(spreadSheetId, result.getSpreadsheetId());
 
         verify(sheetService).saveAllSheets(spreadSheet);
-        assertThat(result.getSheets()).hasSize(2);
+        assertThat(result.getSheetSummaries()).hasSize(2);
 
         //check persistence
         List<SpreadSheetApp> all = repository.findAll();

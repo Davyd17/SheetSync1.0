@@ -1,11 +1,9 @@
 package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.exception.NotFoundException;
-import com.demo.sheetsync.model.dto.response.SheetResponse;
-import com.demo.sheetsync.model.entity.SheetApp;
+import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
-import com.demo.sheetsync.model.mapper.SheetMapper;
 import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
 import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
 import com.demo.sheetsync.repository.SpreadSheetRepository;
@@ -37,10 +35,7 @@ public class SpreadSheetService {
         SpreadSheetResponse response = spreadSheetMapper
                 .toResponse(repository.save(spreadSheet));
 
-        List<SheetResponse> relatedSheets = sheetService
-                .saveAllSheets(spreadSheet);
-
-        response.setSheets(relatedSheets);
+        response.setSheetSummaries(sheetService.saveAllSheets(spreadSheet));
 
         return response;
     }

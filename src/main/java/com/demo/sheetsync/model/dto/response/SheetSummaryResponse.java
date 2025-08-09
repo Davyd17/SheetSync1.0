@@ -1,10 +1,8 @@
 package com.demo.sheetsync.model.dto.response;
 
 
-import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import lombok.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @AllArgsConstructor
@@ -12,10 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class SheetResponse {
+public class SheetSummaryResponse {
 
     private Integer sheetId;
     private String title;
     private List<String> headers;
-    private List<LinkedHashMap<String, Object>> rows;
+    private String spreadsheetId;
 }
