@@ -64,7 +64,7 @@ class SheetRepositoryTest {
 
         //Save the SheetApp with the related SpreadSheetApp saved previously
         SheetApp sheet = SheetApp.builder()
-                .sheetId(1234)
+                .id(1234)
                 .headers(headers)
                 .spreadSheet(spreadSheet)
                 .title("testTittle")

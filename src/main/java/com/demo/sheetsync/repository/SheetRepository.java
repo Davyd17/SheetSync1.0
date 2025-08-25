@@ -14,15 +14,15 @@ public interface SheetRepository extends JpaRepository<SheetApp, Integer> {
 
     @Query("""
             SELECT new com.demo.sheetsync.model.dto.response.SheetSummaryResponse(
-                s.sheetId, s.title, s.headers, s.spreadSheet.spreadsheetId
+                s.id, s.title, s.headers, s.spreadSheet.spreadsheetId
             )
             FROM SheetApp s
             """)
-    Optional<SheetSummaryResponse> findSummaryByTitle(String title);
+    Optional<SheetSummaryResponse> findSummaryById(Integer id);
 
     @Query("""
             SELECT new com.demo.sheetsync.model.dto.response.SheetSummaryResponse(
-                s.sheetId, s.title, s.headers, s.spreadSheet.spreadsheetId
+                s.id, s.title, s.headers, s.spreadSheet.spreadsheetId
             )
             FROM SheetApp s
             """)

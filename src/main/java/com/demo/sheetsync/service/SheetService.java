@@ -55,11 +55,11 @@ public class SheetService {
         return sheetRepository.findAllSheetSummaries();
     }
 
-    public SheetSummaryResponse getSheetSummaryBy(String title){
+    public SheetSummaryResponse getSheetSummaryBy(Integer id){
 
-        return sheetRepository.findSummaryByTitle(title)
+        return sheetRepository.findSummaryById(id)
                 .orElseThrow(() -> new NotFoundException(
-                        format("Sheet with title %s not found", title)
+                        format("Sheet with title %s not found", id)
                 ));
     }
 
@@ -127,7 +127,7 @@ public class SheetService {
 
         List<List<Object>> data = googleSheetsService
                 .getData(spreadSheetId,
-                        sheetTitle + "!A1:C");
+                        sheetTitle + "!A1:J");
 
         return data.get(0)
                 .stream()
@@ -139,7 +139,7 @@ public class SheetService {
 
         return googleSheetsService
                 .getData(sheet.getSpreadSheet().getSpreadsheetId(),
-                        sheet.getTitle() + "!A2:C"
+                        sheet.getTitle() + "!A2:J"
                 );
 
     }

@@ -1,9 +1,11 @@
 package com.demo.sheetsync.controller;
 
+import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.service.SheetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +20,17 @@ public class SheetController {
 
     private final SheetService sheetService;
 
-    @GetMapping("/{sheetId}/data")
-    public Page<LinkedHashMap<String, Object>> getData(@PathVariable Integer sheetId,
+    @GetMapping("/{id}")
+    public ResponseEntity<SheetSummaryResponse> getById(Integer id){
+
+        return ResponseEntity.ok(sheetService.getSheetSummaryBy(id));
+
+    }
+
+    @GetMapping("/{id}/data")
+    public Page<LinkedHashMap<String, Object>> getData(@PathVariable Integer id,
                                                        Pageable pageable){
 
-        return sheetService.getDataFrom(sheetId, pageable);
+        return sheetService.getDataFrom(id, pageable);
     }
 }
