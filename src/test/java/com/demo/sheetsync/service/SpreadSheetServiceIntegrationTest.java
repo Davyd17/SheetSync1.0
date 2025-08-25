@@ -67,12 +67,12 @@ public class SpreadSheetServiceIntegrationTest {
                 .build();
 
         SheetSummaryResponse sheetSummaryResponse1 = new SheetSummaryResponse();
-        sheetSummaryResponse1.setSheetId(1234);
+        sheetSummaryResponse1.setId(1234);
         sheetSummaryResponse1.setTitle("sheet1 title");
         sheetSummaryResponse1.setHeaders(new ArrayList<>());
 
         SheetSummaryResponse sheetSummaryResponse2 = new SheetSummaryResponse();
-        sheetSummaryResponse2.setSheetId(4321);
+        sheetSummaryResponse2.setId(4321);
         sheetSummaryResponse2.setTitle("sheet2 title");
         sheetSummaryResponse2.setHeaders(new ArrayList<>());
 

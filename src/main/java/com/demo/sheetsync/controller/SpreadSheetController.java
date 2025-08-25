@@ -22,8 +22,8 @@ public class SpreadSheetController {
 
     }
 
-    @GetMapping("get/{spreadSheetId}")
-    public ResponseEntity<SpreadSheetResponse> getSpreadSheet(@PathVariable String spreadSheetId){
+    @GetMapping("{spreadSheetId}")
+    public ResponseEntity<SpreadSheetResponse> getBySpreadSheetId(@PathVariable String spreadSheetId){
 
         return ResponseEntity.ok(
                 service.getSpreadSheet(spreadSheetId)

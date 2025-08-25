@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class SheetSummaryResponse {
 
-    private Integer sheetId;
+    private Integer id;
     private String title;
     private List<String> headers;
     private String spreadsheetId;

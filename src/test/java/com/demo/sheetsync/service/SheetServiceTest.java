@@ -62,7 +62,7 @@ class SheetServiceTest {
         googleSheet2.setProperties(sheetProps2);
 
         SheetApp mappedSheet1 = SheetApp.builder()
-                .sheetId(1234)
+                .id(1234)
                 .title("sheet1 title")
                 .rows(new ArrayList<>())
                 .headers(new ArrayList<>())
@@ -70,7 +70,7 @@ class SheetServiceTest {
                 .build();
 
         SheetApp mappedSheet2 = SheetApp.builder()
-                .sheetId(4321)
+                .id(4321)
                 .title("sheet2 title")
                 .rows(new ArrayList<>())
                 .headers(new ArrayList<>())
@@ -78,12 +78,12 @@ class SheetServiceTest {
                 .build();
 
         SheetSummaryResponse responseMappedSheet1 = new SheetSummaryResponse();
-        responseMappedSheet1.setSheetId(1234);
+        responseMappedSheet1.setId(1234);
         responseMappedSheet1.setTitle("sheet1 title");
         responseMappedSheet1.setHeaders(new ArrayList<>());
 
         SheetSummaryResponse responseMappedSheet2 = new SheetSummaryResponse();
-        responseMappedSheet2.setSheetId(4321);
+        responseMappedSheet2.setId(4321);
         responseMappedSheet2.setTitle("sheet2 title");
         responseMappedSheet2.setHeaders(new ArrayList<>());
 

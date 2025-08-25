@@ -10,7 +10,7 @@ public class SheetMapper {
     public SheetSummaryResponse toSummaryResponse(SheetApp sheet){
 
         return SheetSummaryResponse.builder()
-                .sheetId(sheet.getSheetId())
+                .id(sheet.getId())
                 .title(sheet.getTitle())
                 .headers(sheet.getHeaders())
                 .spreadsheetId(sheet.getSpreadSheet().getSpreadsheetId())
@@ -20,7 +20,7 @@ public class SheetMapper {
     public SheetApp toEntity(SheetSummaryResponse response){
 
         return SheetApp.builder()
-                .sheetId(response.getSheetId())
+                .id(response.getId())
                 .title(response.getTitle())
                 .headers(response.getHeaders())
                 .build();
