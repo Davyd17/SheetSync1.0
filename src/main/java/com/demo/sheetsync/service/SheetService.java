@@ -7,6 +7,7 @@ import com.demo.sheetsync.model.entity.SpreadSheetApp;
 import com.demo.sheetsync.model.mapper.GoogleSheetMapper;
 import com.demo.sheetsync.model.mapper.SheetMapper;
 import com.demo.sheetsync.repository.SheetRepository;
+import com.demo.sheetsync.repository.sheet.SheetJdbcRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,6 +29,7 @@ public class SheetService {
     private final GoogleSheetMapper googleSheetMapper;
     private final SheetMapper sheetMapper;
     private final SheetRepository sheetRepository;
+    private final SheetJdbcRepository sheetJdbcRepository;
 
     public List<SheetSummaryResponse> saveAllSheets(SpreadSheetApp spreadSheet) {
 
@@ -83,6 +85,30 @@ public class SheetService {
 
     }
 
+    public Page<LinkedHashMap<String, Object>> fetchDataByHeader(Integer id,
+                                                                 String header,
+                                                                 String criteria,
+                                                                 Pageable pageable) {
+
+        List<String> headers = getSheetSummaryBy(id).getHeaders();
+
+        boolean isHeaderPresent = headers.stream()
+                .anyMatch(sheetHeader -> sheetHeader.equalsIgnoreCase(header));
+
+        if(isHeaderPresent){
+
+            List<List<Object>> data = sheetJdbcRepository
+                    .fetchRowsByColumn(headers.indexOf(header), criteria);
+
+            return pageData(headers, data, pageable);
+
+        } else {
+
+            throw new NotFoundException(format("Header %s not found, please enter a valid one", header));
+
+        }
+    }
+
     private SheetApp getSheetBy(Integer id){
 
         return sheetRepository.findById(id)
@@ -92,6 +118,22 @@ public class SheetService {
     }
 
 
+    private Page<LinkedHashMap<String, Object>> pageData(List<String> headers,
+                                                         List<List<Object>> rows,
+                                                         Pageable pageable){
+
+        int startPage = (int) pageable.getOffset();
+        int endPage = Math.min(startPage + pageable.getPageSize(), rows.size());
+
+        List<List<Object>> pagedRows = rows.subList(startPage, endPage);
+
+        List<LinkedHashMap<String, Object>> mappedPagedRows =
+                toRowMap(pagedRows, headers);
+
+
+        return new PageImpl<>(mappedPagedRows, pageable, rows.size());
+
+    }
 
     private List<LinkedHashMap<String, Object>> toRowMap(List<List<Object>> rows,
                                                          List<String> headers) {
@@ -143,6 +185,7 @@ public class SheetService {
                 );
 
     }
+
 
 }
 
