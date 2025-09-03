@@ -10,11 +10,10 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 @Getter
-public class GoogleSheetsProperties {
+public record GoogleCredentialsProperties(
+        
+        String TOKENS_DIRECTORY_PATH, Collection<String> SCOPES,
+        String CREDENTIALS_FILE_PATH, JsonFactory JSON_FACTORY,
+        NetHttpTransport HTTP_TRANSPORT) {
 
-    private final String TOKENS_DIRECTORY_PATH;
-    private final Collection<String> SCOPES;
-    private final String CREDENTIALS_FILE_PATH;
-    private final JsonFactory JSON_FACTORY;
-    private final NetHttpTransport HTTP_TRANSPORT;
 }
