@@ -1,16 +1,20 @@
 package com.demo.sheetsync.config.googlesheets;
 
-import com.demo.sheetsync.model.entity.GoogleSheetsProperties;
+import com.demo.sheetsync.model.entity.GoogleCredentialsProperties;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,10 +37,15 @@ public class GoogleSheetsConfig {
     }
 
     @Bean
-    public GoogleSheetsProperties googleSheetsProperties(JsonFactory jsonFactory, NetHttpTransport httpTransport) throws GeneralSecurityException, IOException {
-            return new GoogleSheetsProperties(
+    public GoogleCredentialsProperties credentialsProperties(JsonFactory jsonFactory, NetHttpTransport httpTransport) throws GeneralSecurityException, IOException {
+
+        List<String> SCOPES = Arrays.asList(
+                SheetsScopes.SPREADSHEETS_READONLY,
+                DriveScopes.DRIVE);
+
+        return new GoogleCredentialsProperties(
                     "tokens",
-                    Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY),
+                    SCOPES,
                     "/credentials.json",
                     jsonFactory,
                     httpTransport
@@ -44,11 +53,23 @@ public class GoogleSheetsConfig {
     }
 
     @Bean
-    public Sheets sheetsService(GoogleSheetsProperties properties) throws IOException {
+    public Sheets sheetsService(GoogleCredentialsProperties properties) throws IOException {
 
         return new Sheets.Builder(
-                properties.getHTTP_TRANSPORT(),
-                properties.getJSON_FACTORY(),
+                properties.HTTP_TRANSPORT(),
+                properties.JSON_FACTORY(),
+                googleAuth.getCredentials(properties)
+        ).setApplicationName("SheetsSync")
+                .build();
+    }
+
+
+    @Bean
+    public Drive driveService(GoogleCredentialsProperties properties) throws IOException {
+
+        return new Drive.Builder(
+                properties.HTTP_TRANSPORT(),
+                properties.JSON_FACTORY(),
                 googleAuth.getCredentials(properties)
         ).setApplicationName("SheetsSync")
                 .build();

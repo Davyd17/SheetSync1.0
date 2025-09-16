@@ -106,8 +106,8 @@ class SheetServiceTest {
                 .thenReturn(responseMappedSheet2);
 
         //When
-        List<SheetSummaryResponse> savedSheets = sheetService
-                .saveAllSheets(spreadSheet);
+        List<SheetApp> savedSheets = sheetService
+                .buildSheets(spreadSheet);
 
         //Then
         assertThat(savedSheets).hasSize(2);

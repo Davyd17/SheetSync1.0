@@ -4,3 +4,6 @@ spring:
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
+
+drive:
+  webhookUrl: https://264fcabb3143.ngrok-free.app/api/v1/notify

@@ -15,7 +15,7 @@ public class GoogleSheetMapper {
                                 SpreadSheetApp parentSpreadSheet){
 
         return SheetApp.builder()
-                .id(googleSheet.getProperties().getSheetId())
+                .sheetId(googleSheet.getProperties().getSheetId())
                 .title(googleSheet.getProperties().getTitle())
                 .headers(new ArrayList<>())
                 .rows(new ArrayList<>())
