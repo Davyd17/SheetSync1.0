@@ -31,9 +31,9 @@ public class SheetService {
     private final SheetRepository sheetRepository;
     private final SheetJdbcRepository sheetJdbcRepository;
 
-    public List<SheetSummaryResponse> saveAllSheets(SpreadSheetApp spreadSheet) {
+    public List<SheetApp> buildSheets(SpreadSheetApp spreadSheet) {
 
-        List<SheetApp> sheets = googleSheetsService
+        return googleSheetsService
                 .getGoogleSheets(spreadSheet.getSpreadsheetId())
                 .stream().map(googleSheet -> {
 
@@ -45,10 +45,6 @@ public class SheetService {
                     return sheet;
 
                 })
-                .toList();
-
-        return sheetRepository.saveAll(sheets)
-                .stream().map(sheetMapper::toSummaryResponse)
                 .toList();
     }
 
@@ -159,7 +155,7 @@ public class SheetService {
 
     }
 
-
+    //TODO: This should be managed by GoogleSheetService
     private List<String> getGoogleSheetHeaders(SheetApp sheet) {
 
         String spreadSheetId = sheet.getSpreadSheet()
@@ -177,6 +173,7 @@ public class SheetService {
                 .toList();
     }
 
+    //TODO: This should be managed by GoogleSheetService
     private List<List<Object>> getGoogleSheetRows(SheetApp sheet) {
 
         return googleSheetsService

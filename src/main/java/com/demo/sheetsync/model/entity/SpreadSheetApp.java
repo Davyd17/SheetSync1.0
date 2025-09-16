@@ -31,7 +31,7 @@ public class SpreadSheetApp {
     @OneToMany(mappedBy = "spreadSheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SheetApp> sheets;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "watch_id", referencedColumnName = "id", unique = true)
     private SpreadsheetWatch spreadsheetWatch;
 

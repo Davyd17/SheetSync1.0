@@ -6,4 +6,4 @@ spring:
     driver-class-name: org.postgresql.Driver
 
 drive:
-  webhookUrl: https://1b43e8963af2.ngrok-free.app/api/v1/notify
+  webhookUrl: https://264fcabb3143.ngrok-free.app/api/v1/notify

@@ -1,9 +1,7 @@
 package com.demo.sheetsync.service;
 
 import com.demo.sheetsync.exception.NotFoundException;
-import com.demo.sheetsync.model.dto.response.SheetSummaryResponse;
 import com.demo.sheetsync.model.entity.SpreadSheetApp;
-import com.demo.sheetsync.model.entity.SpreadsheetWatch;
 import com.demo.sheetsync.model.mapper.GoogleSpreadsheetMapper;
 import com.demo.sheetsync.model.mapper.SpreadSheetMapper;
 import com.demo.sheetsync.model.dto.response.SpreadSheetResponse;
@@ -11,8 +9,6 @@ import com.demo.sheetsync.repository.SpreadSheetRepository;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static java.lang.String.format;
 
@@ -37,12 +33,10 @@ public class SpreadSheetService {
         spreadSheet.setSpreadsheetWatch(watchService
                 .registerWatch(spreadSheetId));
 
-        SpreadSheetResponse response = spreadSheetMapper
+        spreadSheet.setSheets(sheetService.buildSheets(spreadSheet));
+
+        return spreadSheetMapper
                 .toResponse(repository.save(spreadSheet));
-
-        response.setSheetSummaries(sheetService.saveAllSheets(spreadSheet));
-
-        return response;
     }
 
     public SpreadSheetResponse getSpreadSheet(String spreadSheetId){
