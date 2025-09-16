@@ -22,7 +22,7 @@ public class SpreadSheetApp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "spreadsheet_id")
+    @Column(nullable = false, name = "spreadsheet_id", unique = true)
     private String spreadsheetId;
 
     @Column(nullable = false)
@@ -30,5 +30,9 @@ public class SpreadSheetApp {
 
     @OneToMany(mappedBy = "spreadSheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SheetApp> sheets;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "watch_id", referencedColumnName = "id", unique = true)
+    private SpreadsheetWatch spreadsheetWatch;
 
 }
